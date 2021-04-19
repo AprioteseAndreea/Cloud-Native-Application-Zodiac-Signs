@@ -8,11 +8,74 @@ import proto.ZodiacServiceGrpc;
 
 public class Main {
 
-    public static boolean isValidDate(String date) {
-        return true;
+    private static int getDayFromDate(String date) throws NumberFormatException {
+
+
+        int month = 0;
+        int contor = 0;
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < date.length(); i++) {
+            if(date.charAt(i)=='/') contor++;
+            if(contor==1 && date.charAt(i)!='/')sb.append(date.charAt(i));
+
+
+        }
+        month = Integer.parseInt(sb.toString());
+
+        return month;
 
     }
 
+    private static int getMonthFromDate(String date) throws NumberFormatException {
+        int month = 0;
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < date.length(); i++) {
+            if (date.charAt(i)!='/'){
+                sb.append(date.charAt(i)); }
+            else break;
+
+        }
+        month = Integer.parseInt(sb.toString());
+
+
+        return month;
+    }
+    public static boolean isLeapYear(String year){
+        boolean isLeap = false;
+        int currentYear = Integer.parseInt(year);
+        if (currentYear % 4 == 0) {
+            if (currentYear % 100 == 0) {
+                if (currentYear % 400 == 0)
+                    isLeap = true;
+                else
+                    isLeap = false;
+            }
+        }
+        return isLeap;
+    }
+    public static boolean verifyLeapYear(String date) {
+        boolean isOk=true;
+        if(getMonthFromDate(date)==2 && isLeapYear(date.substring(date.length() - 4, date.length()))){
+            if(getDayFromDate(date)<=29) isOk=true;
+            else isOk=false;
+        }
+        return isOk;
+    }
+
+    public static boolean isValidDate(String date) {
+        //Regular expression to accept date in MM/DD/YYY format
+
+        String regex = "^[0-2]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$";
+        boolean result = date.matches(regex);
+        if (result && verifyLeapYear(date)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
     public static void main(String[] args) {
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8999).usePlaintext().build();
 
