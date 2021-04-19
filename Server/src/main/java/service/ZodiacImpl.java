@@ -30,6 +30,14 @@ public class ZodiacImpl extends ZodiacServiceGrpc.ZodiacServiceImplBase {
                     .build());
 
 
+        }else if(request.getType().equals("Chinese")){
+            ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8997).usePlaintext().build();
+
+            ChineseServiceGrpc.ChineseServiceBlockingStub chineseStub = ChineseServiceGrpc.newBlockingStub(channel);
+            Zodiac.ChineseZodiacResponse chineseSign = chineseStub.getChineseSign(Zodiac.DateRequest.newBuilder().setDate(request.getDate()).build());
+            // System.out.println("Your sign is: " + chineseSign.getSign());
+
+
         }
 
 
