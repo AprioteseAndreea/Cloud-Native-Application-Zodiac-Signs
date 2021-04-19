@@ -11,13 +11,13 @@ public class Main {
     private static int getDayFromDate(String date) throws NumberFormatException {
 
 
-        int month = 0;
-        int contor = 0;
+        int month;
+        int counter = 0;
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < date.length(); i++) {
-            if(date.charAt(i)=='/') contor++;
-            if(contor==1 && date.charAt(i)!='/')sb.append(date.charAt(i));
+            if(date.charAt(i)=='/') counter++;
+            if(counter==1 && date.charAt(i)!='/')sb.append(date.charAt(i));
 
 
         }
@@ -28,7 +28,7 @@ public class Main {
     }
 
     private static int getMonthFromDate(String date) throws NumberFormatException {
-        int month = 0;
+        int month;
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < date.length(); i++) {
@@ -49,8 +49,7 @@ public class Main {
             if (currentYear % 100 == 0) {
                 if (currentYear % 400 == 0)
                     isLeap = true;
-                else
-                    isLeap = false;
+
             }
         }
         return isLeap;
@@ -58,8 +57,7 @@ public class Main {
     public static boolean verifyLeapYear(String date) {
         boolean isOk=true;
         if(getMonthFromDate(date)==2 && isLeapYear(date.substring(date.length() - 4, date.length()))){
-            if(getDayFromDate(date)<=29) isOk=true;
-            else isOk=false;
+            isOk= getDayFromDate(date) <= 29;
         }
         return isOk;
     }
@@ -69,11 +67,7 @@ public class Main {
 
         String regex = "^[0-2]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$";
         boolean result = date.matches(regex);
-        if (result && verifyLeapYear(date)) {
-            return true;
-        } else {
-            return false;
-        }
+        return result && verifyLeapYear(date);
 
     }
     public static void main(String[] args) {
