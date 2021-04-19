@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option java_package = "proto";
+
+service ZodiacService{
+
+  rpc getZodiacSign(ZodiacRequest) returns (ConfirmationResponse);
+
+}
+service EuropeanService{
+  rpc getEuropeanSign(DateRequest) returns (EuropeanZodiacResponse);
+}
+service ChineseService{
+  rpc getChineseSign(DateRequest) returns (ChineseZodiacResponse);
+
+}
+message EuropeanZodiacResponse{
+  string sign = 1;
+}
+message ChineseZodiacResponse{
+  string sign = 1;
+}
+message DateRequest {
+  string date = 1;
+
+}
+message ZodiacRequest{
+  string date=1;
+  string type=2;
+}
+message ZodiacSignResponse {
+  string sign = 1;
+
+}
+message ConfirmationResponse{
+  string message=1;
+}
