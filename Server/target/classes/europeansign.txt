@@ -1,0 +1,12 @@
+Aries 21/3 20/4
+Taurus 21/4 20/5
+Gemini 21/5 21/6
+Cancer 22/6 22/7
+Leo 23/7 22/8
+Virgo 23/8 22/9
+Libra 23/9 22/10
+Scorpio 23/10 21/11
+Sagittarius 22/11 20/12
+Capricorn 21/12 19/1
+Aquarius 20/1 18/2
+Pisces 19/2 20/3
