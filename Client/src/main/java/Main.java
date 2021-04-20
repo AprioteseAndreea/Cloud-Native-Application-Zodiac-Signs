@@ -92,6 +92,10 @@ public class Main {
                         setType(type)
                         .build());
                   }
+            System.out.println(zodiacStub.getZodiacSign(Zodiac.ZodiacRequest.newBuilder().
+                    setDate(currentDate).
+                    setType(type)
+                    .build()));
 
             }
 

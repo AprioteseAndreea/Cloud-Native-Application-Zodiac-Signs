@@ -77,9 +77,15 @@ public class EuropeanImpl extends EuropeanServiceGrpc.EuropeanServiceImplBase {
                 int endMonth = s.getEndMonth();
                 int startDay = s.getStartDay();
                 int endDay = s.getEndDay();
-                if ((month == startMonth || month == endMonth) && (day >= startDay || day <= endDay)) {
-                    sign = s.getZodiacSignName();
-                    break;
+               /* if ((month == startMonth || month == endMonth) && (day >= startDay || day <= endDay)) {
+                    sign = s.getZodiacSignName();*/
+                    //break;
+
+                if(month==startMonth && day>=startDay){
+                    sign=s.getZodiacSignName();
+
+                }else if (month==endMonth && day<=endDay){
+                    sign=s.getZodiacSignName();
                 }
 
             }
