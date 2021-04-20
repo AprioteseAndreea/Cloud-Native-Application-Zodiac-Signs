@@ -16,8 +16,8 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < date.length(); i++) {
-            if(date.charAt(i)=='/') counter++;
-            if(counter==1 && date.charAt(i)!='/')sb.append(date.charAt(i));
+            if (date.charAt(i) == '/') counter++;
+            if (counter == 1 && date.charAt(i) != '/') sb.append(date.charAt(i));
 
 
         }
@@ -32,9 +32,9 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < date.length(); i++) {
-            if (date.charAt(i)!='/'){
-                sb.append(date.charAt(i)); }
-            else break;
+            if (date.charAt(i) != '/') {
+                sb.append(date.charAt(i));
+            } else break;
 
         }
         month = Integer.parseInt(sb.toString());
@@ -42,7 +42,8 @@ public class Main {
 
         return month;
     }
-    public static boolean isLeapYear(String year){
+
+    public static boolean isLeapYear(String year) {
         boolean isLeap = false;
         int currentYear = Integer.parseInt(year);
         if (currentYear % 4 == 0) {
@@ -54,10 +55,11 @@ public class Main {
         }
         return isLeap;
     }
+
     public static boolean verifyLeapYear(String date) {
-        boolean isOk=true;
-        if(getMonthFromDate(date)==2 && isLeapYear(date.substring(date.length() - 4, date.length()))){
-            isOk= getDayFromDate(date) <= 29;
+        boolean isOk = true;
+        if (getMonthFromDate(date) == 2 && isLeapYear(date.substring(date.length() - 4, date.length()))) {
+            isOk = getDayFromDate(date) <= 29;
         }
         return isOk;
     }
@@ -70,6 +72,7 @@ public class Main {
         return result && verifyLeapYear(date);
 
     }
+
     public static void main(String[] args) {
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8999).usePlaintext().build();
 
@@ -79,27 +82,30 @@ public class Main {
         while (isRunning) {
 
             Scanner sc = new Scanner(System.in);
-            System.out.println("Enter the date: ");
+            System.out.println("Enter the date: (mm/dd/yyy format)");
             String currentDate = sc.next();
             System.out.println("Enter the zodiac type: ");
             String type = sc.next();
 
+            try {
+                if (isValidDate(currentDate)) {
 
-            if (isValidDate(currentDate)) {
-
-                Zodiac.ConfirmationResponse sign = zodiacStub.getZodiacSign(Zodiac.ZodiacRequest.newBuilder().
+                    Zodiac.ConfirmationResponse sign = zodiacStub.getZodiacSign(Zodiac.ZodiacRequest.newBuilder().
+                            setDate(currentDate).
+                            setType(type)
+                            .build());
+                }
+                System.out.println(zodiacStub.getZodiacSign(Zodiac.ZodiacRequest.newBuilder().
                         setDate(currentDate).
                         setType(type)
-                        .build());
-                  }
-            System.out.println(zodiacStub.getZodiacSign(Zodiac.ZodiacRequest.newBuilder().
-                    setDate(currentDate).
-                    setType(type)
-                    .build()));
+                        .build()));
 
+            } catch (Exception e) {
+                System.out.println("Invalid date!");
             }
 
-           channel.shutdown();
+            channel.shutdown();
         }
     }
+}
 
